@@ -4,7 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="theme-color" content="#7bbf9e" />
-<title>とこカルテ Ver.2</title>
+<title>とこカルテ Ver.3</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <style>
 :root{--bg:#fffaf0;--card:#fff;--ink:#332a24;--muted:#796d63;--accent:#6fb994;--accent2:#e9f8f0;--warn:#e6a23c;--danger:#d85c5c;--line:#eadfce;--soft:#f7f0e6;--blue:#6aa6d8;}
 *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;padding:12px 12px 88px;}
@@ -17,7 +19,7 @@ textarea{min-height:78px;resize:vertical}.row{display:grid;grid-template-columns
 </head>
 <body>
 <div class="container">
-<section class="hero"><h1>🦜 とこカルテ Ver.2</h1><p class="sub">産卵・ホルモン治療・体調変化を、主治医に見せやすく記録するカルテ。</p></section>
+<section class="hero"><h1>🦜 とこカルテ Ver.3</h1><p class="sub">産卵・ホルモン治療・体調変化を、主治医に見せやすく記録するカルテ。オフライン対応。</p></section>
 
 <section id="view-home" class="view">
   <div class="card"><h2>今日の状態</h2><div class="summary" id="summary"></div><p class="notice">目的は「産卵ゼロ」だけではなく、とこちゃんの消耗が減っているかを見ること。元気・ろう膜・体重・産卵間隔をセットで見る。</p></div>
@@ -84,6 +86,14 @@ $('restoreBtn').onclick=()=>{try{const arr=JSON.parse($('restoreText').value); i
 $('clearAll').onclick=()=>{if(confirm('全記録を削除します。本当に？')) save([])};
 function renderAll(){renderSummary();renderLogs();drawChart();renderCalendar();makeReport()}
 renderAll();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js').catch(() => {});
+  });
+}
 </script>
 </body>
 </html>
